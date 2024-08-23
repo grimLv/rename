@@ -47,6 +47,7 @@ def getDirector():
                                 # 如果文件名包含_符号，则替换成-
                                     modify_file_name=root+system_separate+after_split[0]+'-'+after_split[1]+'.'+old_name_suffix
                                     os.rename(old_name_complete,modify_file_name)
+                                    continue
                             search_result = pattern.search(after_split[0]).group()
                             if len(search_result) != 0:
                                 temp = after_split[1]
