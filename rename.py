@@ -42,13 +42,17 @@ def getDirector(ref_file_dir):
                                 tm.showerror('Error','该文件命名缺少姓名或工号：'+root+system_separate+sub_files[file_index])
                                 return
                             if new_file_name!='':
-                                temp_file_name=new_file_name+'.'+old_name_suffix
-                                if temp_file_name in sub_files:
-                                    tm.showerror('Error', '文件名重复，请检查名字：' + root + system_separate + sub_files[
-                                        file_index])
-                                    return
-                                complete_new_file_name=root+system_separate+new_file_name+'.'+old_name_suffix
-                                os.rename(old_name_complete,complete_new_file_name)
+                                if old_name!=new_file_name:
+                                    temp_file_name = new_file_name + '.' + old_name_suffix
+                                    if temp_file_name in sub_files:
+                                        tm.showerror('Error', '文件名重复，请检查名字：' + root + system_separate + sub_files[
+                                            file_index])
+                                        return
+                                    complete_new_file_name=root+system_separate+new_file_name+'.'+old_name_suffix
+                                    os.rename(old_name_complete,complete_new_file_name)
+                                else:
+                                    complete_new_file_name = root + system_separate + new_file_name + '.' + old_name_suffix
+                                    os.rename(old_name_complete, complete_new_file_name)
                             else:
                                 tm.showerror('Error', '新文件名有误：' + root + system_separate + sub_files[file_index])
                                 return
@@ -94,7 +98,7 @@ def execute():
     if file_dir=='':
         tm.showerror("Error","文件选择路径不能为空！")
         return
-    if file_dir.count(os.sep) <= 0:
+    if (file_dir.count(os.sep) <= 0) & (file_dir.count('/')<=0):
         tm.showerror("Error","文件路径不正确！")
         return
     getDirector(file_dir)
