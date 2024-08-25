@@ -1,4 +1,4 @@
-('c:\\1_Software\\pythonProject\\renamebatch\\build\\rename\\PYZ-00.pyz',
+('C:\\1_Software\\pythonProject\\renamebatch\\build\\rename\\PYZ-00.pyz',
  [('_compat_pickle',
    'C:\\1_Software\\Python3.12.4\\Lib\\_compat_pickle.py',
    'PYMODULE'),

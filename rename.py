@@ -34,7 +34,7 @@ def getDirector(ref_file_dir):
                             # 用-或_分割文件名
            #                after_split=re.split('-|_',old_name)
                             hans_name_match=re.findall('[\u4e00-\u9fa5]{1,4}',old_name)
-                            employee_number_match=re.findall('[A-Za-z]\d{1,4}',old_name)
+                            employee_number_match=re.findall('[A-Za-z]\\d{1,4}',old_name)
                             new_file_name=''
                             if (len(hans_name_match)>0) & (len(employee_number_match))>0:
                                 new_file_name=hans_name_match[0]+'_'+str(employee_number_match[0]).upper()
@@ -42,8 +42,16 @@ def getDirector(ref_file_dir):
                                 tm.showerror('Error','该文件命名缺少姓名或工号：'+root+system_separate+sub_files[file_index])
                                 return
                             if new_file_name!='':
+                                temp_file_name=new_file_name+'.'+old_name_suffix
+                                if temp_file_name in sub_files:
+                                    tm.showerror('Error', '文件名重复，请检查名字：' + root + system_separate + sub_files[
+                                        file_index])
+                                    return
                                 complete_new_file_name=root+system_separate+new_file_name+'.'+old_name_suffix
                                 os.rename(old_name_complete,complete_new_file_name)
+                            else:
+                                tm.showerror('Error', '新文件名有误：' + root + system_separate + sub_files[file_index])
+                                return
                             # 如果符合姓名-工号的格式则进方法体
   #                       if pattern.match(after_split[0]) == None:
   #                           # 如果文件名包含-符号，则跳过
@@ -68,10 +76,13 @@ def getDirector(ref_file_dir):
   #                           os.rename(old_name_complete,new_name_complete)
             else:
                 print("外层文件夹没有文件"+out_root)
+                return
     except:
         tm.showerror("Error","执行出错！")
+        return
     else:
         tm.showinfo("Info","执行完成")
+        return
 
 def selectFile():
     global file_dir
@@ -83,11 +94,10 @@ def execute():
     if file_dir=='':
         tm.showerror("Error","文件选择路径不能为空！")
         return
-    if file_dir.count(os.sep):
+    if file_dir.count(os.sep) <= 0:
         tm.showerror("Error","文件路径不正确！")
         return
     getDirector(file_dir)
-    pass
 
 def showWindow():
     root_window = tk.Tk();
